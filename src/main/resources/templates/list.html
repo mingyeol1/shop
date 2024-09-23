@@ -18,8 +18,22 @@
             <a th:href="@{'/detail/' + ${i.id}}">  <h4 th:text="${i.title}">바지</h4> </a> <!-- thymeleaf 문법 {name}이 <>여기</>를 덮어 씌움 -->
         <p th:text="${i.price}">원</p>
             <a th:href="'/modify/' + ${i.id}">수정</a>
+            <button class="btn">삭제</button>
         </div>
     </div>
+
+    
+
+    <script>
+        document.querySelectorAll(".btn")[0].addEventListener("click", function(){
+            fetch('/delete/' +id, {
+                method : 'DELETE',
+                headers : { 'Content-Type' : 'application/json' }
+            }) 
+        })
+        
+
+    </script>
 
 </body>
 </html>

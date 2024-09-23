@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller //<-  API를 만들 수 있는 어노테이션
@@ -85,6 +86,14 @@ public class itemController {
         System.out.println("변경했음");
 
         return "redirect:/list";
+    }
+
+    @DeleteMapping("/delete/{id}")
+        String ajaxTest(@PathVariable Long id){         //유저가 보낸 타입이 무엇인지 모르겠으면  Object로 설정
+
+            itemService.remove(id);
+
+            return "redirect:/list";
     }
 
 

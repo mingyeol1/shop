@@ -14,4 +14,10 @@ public class ItemService {
 
         itemRepository.save(item);
     }
+
+
+    public void remove(Long id) {
+
+        itemRepository.deleteById(id);
+    }
 }
