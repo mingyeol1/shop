@@ -33,6 +33,14 @@ dependencies {
     //롬복 라이브러리 코드를 자동생성해주는 라이브러리임
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    //스프링 시큐리티
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //타임리프에서도 스프링시큐리티를 사용할 수 있게 해줌
+    //Thymeleaf 쓰는 사람만 설치하면 되는데 html 파일에서 회원정보 쉽게 꺼내쓸 수 있게 도와주는 용도입니다.
+    //근데 처음 설치하고 서버 띄워보면 모든 페이지를 로그인 창으로 막아줍니다. 그래서 아무것도 못함.
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+
 }
 
 tasks.named('test') {

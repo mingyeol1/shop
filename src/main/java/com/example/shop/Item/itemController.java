@@ -1,13 +1,14 @@
-package com.example.shop; //<- 현재 이 파일의 경로.
+package com.example.shop.Item; //<- 현재 이 파일의 경로.
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller //<-  API를 만들 수 있는 어노테이션
@@ -33,7 +34,7 @@ public class itemController {
         return "write.html";
     }
     @PostMapping("/add")
-    public String addPost(Item item) {
+    public String addPost(@RequestBody Item item) {
 
         itemRepository.save(item);
 
@@ -88,12 +89,23 @@ public class itemController {
         return "redirect:/list";
     }
 
-    @DeleteMapping("/delete/{id}")
-        String ajaxTest(@PathVariable Long id){         //유저가 보낸 타입이 무엇인지 모르겠으면  Object로 설정
+    @DeleteMapping("/delete")
+    ResponseEntity<String> ajaxTest(@RequestParam Long id){         //유저가 보낸 타입이 무엇인지 모르겠으면  Object로 설정
 
-            itemService.remove(id);
+         itemRepository.deleteById(id);
 
-            return "redirect:/list";
+            return ResponseEntity.status(200).body("삭제완료");
+    }
+
+
+    @GetMapping("/test2")
+    String ajaxTest2(@RequestParam Long id){         //유저가 보낸 타입이 무엇인지 모르겠으면  Object로 설정
+
+        var result = new BCryptPasswordEncoder().encode("dd");
+
+        System.out.println(result);
+
+        return "redirect:/list";
     }
 
 

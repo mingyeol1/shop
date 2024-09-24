@@ -1,6 +1,7 @@
-package com.example.shop;
+package com.example.shop.Item;
 
 
+import com.example.shop.Member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +13,9 @@ public class ItemService {
 
     public void saveItem(Item item) {
 
+
         itemRepository.save(item);
     }
 
 
-    public void remove(Long id) {
-
-        itemRepository.deleteById(id);
-    }
 }
