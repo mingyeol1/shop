@@ -13,8 +13,9 @@
 <div th:replace="~{ nav.html::navbar}"></div>
 
     <form action="/add" method="post">
-        <input name="title">
-        <input name="price">
+        <input name="title" placeholder="상품">
+        <input name="price" placeholder="가격">
+        <input name="username" placeholder="작성자" th:value="${#authentication.principal.username}" readonly style="display: none;">
         <button type="submit">전송</button>
     </form>
 

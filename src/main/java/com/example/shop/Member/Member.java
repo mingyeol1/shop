@@ -1,19 +1,21 @@
 package com.example.shop.Member;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Member {
     @Id
-    String username;
+    @Column(unique = true)
+    String username;    //사용자의 아이디
 
-    String password;
-    String displayName;
+    String password;    //비밀번호
+    String displayName; //사용자 이름
 
 }

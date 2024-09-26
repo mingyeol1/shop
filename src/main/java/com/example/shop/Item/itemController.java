@@ -34,7 +34,7 @@ public class itemController {
         return "write.html";
     }
     @PostMapping("/add")
-    public String addPost(@RequestBody Item item) {
+    public String addPost(@ModelAttribute Item item) {
 
         itemRepository.save(item);
 

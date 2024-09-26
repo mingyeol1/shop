@@ -17,6 +17,7 @@
         <div>
             <a th:href="@{'/detail/' + ${i.id}}">  <h4 th:text="${i.title}"></h4> </a> <!-- thymeleaf 문법 {name}이 <>여기</>를 덮어 씌움 -->
         <p th:text="${i.price} + 원">원</p>
+            <p th:text="'작성자 : '+ ${i.username}"></p>
 
             <a th:href="'/modify/' + ${i.id}">수정</a>
             <button th:onclick="fetch('/delete?id=[[${i.id}]]', {method : 'DELETE'})
