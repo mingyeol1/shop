@@ -2,11 +2,14 @@ package com.example.shop.Item; //<- 현재 이 파일의 경로.
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,12 +20,24 @@ public class itemController {
 
     private final ItemRepository itemRepository;
     private final ItemService itemService;
+    private final S3Service s3Service;
 
     @GetMapping ("/list")
     //@ResponseBody <- 데이터만 보내주고 싶을 때 사용
     public String list(Model model) {
-        List<Item> result = itemRepository.findAll();
+        Page<Item> result = itemRepository.findPageBy(PageRequest.of(0, 5));
 
+
+        model.addAttribute("items", result);
+        return "list.html";
+    }
+
+    @GetMapping ("/list/{num}")
+    //@ResponseBody <- 데이터만 보내주고 싶을 때 사용
+    public String getListPage(Model model, @PathVariable Integer num) {
+
+        Page<Item> result = itemRepository.findPageBy(PageRequest.of(num-1,5)); //(페이지넘버, 게시물 개수(페이지당 n개))
+        System.out.println("총 페이지 : " + result.getTotalPages());
 
         model.addAttribute("items", result);
         return "list.html";
@@ -36,7 +51,10 @@ public class itemController {
     @PostMapping("/add")
     public String addPost(@ModelAttribute Item item) {
 
+
+
         itemRepository.save(item);
+
 
         return "redirect:/list";
     }
@@ -108,9 +126,19 @@ public class itemController {
         return "redirect:/list";
     }
 
+    @GetMapping("/presigned-url")
+    @ResponseBody
+    String getURL(@RequestParam String filename){
 
-    @ExceptionHandler(Exception.class)
-    public void handler(){
+        String result =  s3Service.createPresignedUrl("test/" + filename); //경로를 적어주면 저장.
+        System.out.println(result);
 
+
+
+        return result;
     }
+
+
+
+
 }

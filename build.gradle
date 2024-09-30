@@ -41,6 +41,8 @@ dependencies {
     //근데 처음 설치하고 서버 띄워보면 모든 페이지를 로그인 창으로 막아줍니다. 그래서 아무것도 못함.
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
 
+    //s3이미지 저장.
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.1.1'
 }
 
 tasks.named('test') {

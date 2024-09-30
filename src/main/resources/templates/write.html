@@ -16,8 +16,37 @@
         <input name="title" placeholder="상품">
         <input name="price" placeholder="가격">
         <input name="username" placeholder="작성자" th:value="${#authentication.principal.username}" readonly style="display: none;">
+        <input type="hidden" name="filename" id="image-url">
         <button type="submit">전송</button>
     </form>
+
+    <input type="file" onchange="getURL(this)" name="filename">
+    <img src="">
+
+    <script>
+
+        async function getURL(e){
+            let name = encodeURIComponent(e.files[0].name);
+            let result = await fetch('/presigned-url?filename=' + name);
+            result = await result.text(); // 서버가 보내준 URL
+
+            let uploadResult = await fetch(result, {
+                method: 'PUT',
+                body: e.files[0]
+            });
+
+            console.log(uploadResult);
+            console.log(uploadResult.url.split("?")[0]);
+
+            if (uploadResult.ok) {
+                const imageUrl = uploadResult.url.split("?")[0];
+                document.querySelector('img').src = imageUrl;
+                // 이미지 URL을 hidden input에 저장
+                document.getElementById('image-url').value = imageUrl;
+            }
+        }
+
+    </script>
 
 </body>
 </html>
