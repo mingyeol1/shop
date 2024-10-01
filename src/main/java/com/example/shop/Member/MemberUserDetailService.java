@@ -1,20 +1,15 @@
 package com.example.shop.Member;
 
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,13 +43,3 @@ public class MemberUserDetailService implements UserDetailsService {
 }
 
 
-class CustomUser extends User {
-
-    String displayName;
-
-    public CustomUser(String username,
-                      String password,
-                      Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
-    }
-}

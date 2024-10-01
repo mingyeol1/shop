@@ -1,6 +1,8 @@
 package com.example.shop.Item; //<- 현재 이 파일의 경로.
 
 
+import com.example.shop.comment.Comment;
+import com.example.shop.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,7 @@ public class itemController {
     private final ItemRepository itemRepository;
     private final ItemService itemService;
     private final S3Service s3Service;
+    private final CommentService commentService;
 
     @GetMapping ("/list")
     //@ResponseBody <- 데이터만 보내주고 싶을 때 사용
@@ -66,6 +69,9 @@ public class itemController {
         if(result.isPresent()) {
             Item item = result.get(); // Optional에서 실제 객체를 추출
             model.addAttribute("items", item); // Optional이 아닌 실제 객체를 모델에 추가
+
+            List<Comment> comments = commentService.list(id);
+            model.addAttribute("comments", comments);
         }
 
         return "detail.html";
@@ -136,6 +142,14 @@ public class itemController {
 
 
         return result;
+    }
+
+    @PostMapping("/search")
+    String postSearch(@RequestParam String searchText){
+
+        var result = itemRepository.findAAllByTitleContains(searchText);
+        System.out.println(result);
+        return "list.html";
     }
 
 

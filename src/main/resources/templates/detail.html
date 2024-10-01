@@ -12,12 +12,25 @@
 
 <div th:replace="~{ nav.html::navbar}"></div>
 
-<div class="detail" th:each="i : ${items}">
+<div class="detail">
     <h4>상세페이지</h4>
-    <img th:src="${i.filename}">
-    <h4 th:text="${i.title}">금도금 바지</h4>
-    <p th:text="${i.price}">7억</p>
-    <p th:text="'작성자 : '+ ${i.username}"></p>
+    <img th:src="${items.filename}">
+    <h4 th:text="${items.title}">금도금 바지</h4>
+    <p th:text="${items.price}">7억</p>
+    <p th:text="'작성자 : '+ ${items.username}"></p>
+</div>
+
+<div>
+    <h4>댓글 쓰기</h4>
+    <form action="/comment" method="post">
+        <input name="content" placeholder="댓글내용">
+        <input hidden name="parentId" th:value="${items.id}" readonly style="display : none">
+        <button type="submit">작성</button>
+    </form>
+</div>
+
+<div th:each="c : ${comments}">
+    <p th:text="${c.content} +  ' 작성자 : '+ ${c.username}"></p>
 </div>
 
 </body>
