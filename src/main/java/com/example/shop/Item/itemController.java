@@ -144,11 +144,14 @@ public class itemController {
         return result;
     }
 
-    @PostMapping("/search")
-    String postSearch(@RequestParam String searchText){
+    @GetMapping("/search")
+    String postSearch(@RequestParam String searchText, Model model){
 
-        var result = itemRepository.findAAllByTitleContains(searchText);
-        System.out.println(result);
+       List<Item> search =  itemRepository.rawQuery1(searchText);
+        System.out.println(itemRepository.rawQuery1(searchText));
+
+        model.addAttribute("search", search);
+
         return "list.html";
     }
 

@@ -19,11 +19,6 @@ public class MemberController {
     @GetMapping("/register")
     public String registerGet(Authentication auth){
 
-        if(auth.isAuthenticated() == true){
-
-            System.out.println("로그인 한 사용자라 list로 리다이렉트");
-            return "redirect:/list";
-        }
 
         return "register.html";
     }

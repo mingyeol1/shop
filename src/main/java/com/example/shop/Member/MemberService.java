@@ -18,13 +18,13 @@ public class MemberService {
 
     public void register(Member member) throws Exception{
 
-        Optional<Member> result = memberRepository.findById(member.username);
+        Optional<Member> result = memberRepository.findByUsername(member.username);
 
         if (result.isPresent()){
             throw new Exception("존재하는 아이디");
         }
 
-        if (member.password.length() < 8 || member.username.length() < 8){
+        if (member.password.length() < 2 || member.username.length() < 2){
             throw new Exception("8글자 이상");
         }
 
